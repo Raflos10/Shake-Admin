@@ -58,6 +58,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         <p><strong>Coordinates:</strong> ${place.lat}, ${place.lon}</p>
     `
 
+    // Set map iframe
+    const lat = parseFloat(place.lat)
+    const lon = parseFloat(place.lon)
+    const bbox = `${lon - 0.01},${lat - 0.01},${lon + 0.01},${lat + 0.01}`
+    const iframe = document.getElementById('map-iframe')
+    iframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lon}`
+
     createBtn.addEventListener('click', async function() {
         const venueData = {
             country: (address.country_code || '').toUpperCase(),
