@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <main>
+        {{ content }}
+    </main>
+
+    <script>
+        window.SUPABASE_CONFIG = {
+            url: '{{ site.supabase_url }}',
+            key: '{{ site.supabase_anon_key }}'
+        }
+    </script>
+    <script src="{{ '/assets/js/supabase-config.js' | relative_url }}"></script>
+</body>
+</html>
