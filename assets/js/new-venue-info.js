@@ -42,16 +42,19 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Display place details
     const address = place.address || {}
+    const parsedAddress1 = (address.house_number ? address.house_number + ' ' : '') + (address.road || '')
+    const parsedAddress2 = address.suburb || address.neighbourhood || ''
+    const parsedCity = address.city || address.town || address.village || address.hamlet || ''
+    const parsedSubdivision = address.state || address.county || ''
+
     detailsDiv.innerHTML = `
-        <p><strong>Display Name:</strong> ${place.display_name}</p>
-        <p><strong>OSM Type:</strong> ${place.osm_type}</p>
-        <p><strong>OSM ID:</strong> ${place.osm_id}</p>
-        <p><strong>Place ID:</strong> ${place.place_id}</p>
-        <p><strong>Bounding Box:</strong> ${place.boundingbox ? place.boundingbox.join(', ') : 'N/A'}</p>
-        <p><strong>Country:</strong> ${address.country || 'N/A'}</p>
-        <p><strong>City:</strong> ${address.city || address.town || address.village || 'N/A'}</p>
+        <p><strong>Location Name:</strong> ${place.display_name.split(',')[0]}</p>
+        <p><strong>Address 1:</strong> ${parsedAddress1 || 'N/A'}</p>
+        <p><strong>Address 2:</strong> ${parsedAddress2 || 'N/A'}</p>
+        <p><strong>City:</strong> ${parsedCity || 'N/A'}</p>
         <p><strong>Postal Code:</strong> ${address.postcode || 'N/A'}</p>
-        <p><strong>Subdivision:</strong> ${address.state || 'N/A'}</p>
+        <p><strong>Subdivision:</strong> ${parsedSubdivision || 'N/A'}</p>
+        <p><strong>Country:</strong> ${address.country || 'N/A'} (${(address.country_code || '').toUpperCase()})</p>
         <p><strong>Coordinates:</strong> ${place.lat}, ${place.lon}</p>
     `
 
