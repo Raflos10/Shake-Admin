@@ -1,4 +1,2 @@
 title: Shake Admin Tool
 
-plugins:
-  - jekyll-environment-variables
