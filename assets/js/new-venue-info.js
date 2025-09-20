@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             city: address.city || address.town || address.village || address.hamlet || '',
             postal_code: address.postcode || '',
             subdivision: address.state || address.county || '',
-            coordinates: { x: parseFloat(place.lat), y: parseFloat(place.lon) }
+            coordinates: { lat: parseFloat(place.lat), lon: parseFloat(place.lon) }
         }
 
         try {
