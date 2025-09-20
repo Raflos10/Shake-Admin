@@ -51,6 +51,15 @@ document.addEventListener('DOMContentLoaded', async function () {
                 <p><strong>Updated At:</strong> ${new Date(venue.updated_at).toLocaleString()}</p>
             `
 
+            // Set map iframe
+            if (venue.coordinates) {
+                const lat = venue.coordinates.x
+                const lon = venue.coordinates.y
+                const bbox = `${lon - 0.01},${lat - 0.01},${lon + 0.01},${lat + 0.01}`
+                const iframe = document.getElementById('map-iframe')
+                iframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lon}`
+            }
+
             document.getElementById('delete-venue-btn').addEventListener('click', async function () {
                 if (confirm('Are you sure you want to delete this venue?')) {
                     try {
