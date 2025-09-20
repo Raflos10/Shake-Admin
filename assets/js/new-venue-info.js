@@ -23,8 +23,11 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     if (!placeId) {
         showMessage('No place ID provided.', true)
+        detailsDiv.innerHTML = 'No place ID provided.'
         return
     }
+
+    detailsDiv.innerHTML = 'Loading...'
 
     let place
     try {
@@ -32,11 +35,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         const results = await response.json()
         if (results.length === 0) {
             showMessage('Place not found.', true)
+            detailsDiv.innerHTML = 'Place not found.'
             return
         }
         place = results[0]
     } catch (error) {
         showMessage('Error fetching place details: ' + error.message, true)
+        detailsDiv.innerHTML = 'Error fetching place details.'
         return
     }
 

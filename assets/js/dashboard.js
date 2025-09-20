@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         messageDiv.style.color = isError ? 'red' : 'green'
     }
 
+    userDataDiv.innerHTML = 'Loading...'
+    document.getElementById('venues-tbody').innerHTML = '<tr><td colspan="6">Loading...</td></tr>'
+
     const session = await window.checkAuth()
 
     try {
@@ -48,6 +51,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         if (venuesError) {
             showMessage('Error loading venues: ' + venuesError.message, true)
+            document.getElementById('venues-tbody').innerHTML = '<tr><td colspan="6">Error loading venues</td></tr>'
         } else {
             document.getElementById('venues-count').textContent = venues.length
             const tbody = document.getElementById('venues-tbody')
@@ -68,6 +72,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     } catch (error) {
         showMessage('Error loading dashboard data: ' + error.message, true)
+        userDataDiv.innerHTML = 'Error loading user data'
+        document.getElementById('venues-tbody').innerHTML = '<tr><td colspan="6">Error loading venues</td></tr>'
     }
 }
 )

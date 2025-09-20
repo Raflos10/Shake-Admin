@@ -22,8 +22,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (!venueId) {
         showMessage('No venue ID provided.', true)
+        detailsDiv.innerHTML = 'No venue ID provided.'
         return
     }
+
+    detailsDiv.innerHTML = 'Loading...'
 
     try {
         const { data: venue, error } = await window.supabaseClient
@@ -34,8 +37,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         if (error) {
             showMessage('Error loading venue: ' + error.message, true)
+            detailsDiv.innerHTML = 'Error loading venue.'
         } else if (!venue) {
             showMessage('Venue not found.', true)
+            detailsDiv.innerHTML = 'Venue not found.'
         } else {
             detailsDiv.innerHTML = `
                 <p><strong>ID:</strong> ${venue.id}</p>
