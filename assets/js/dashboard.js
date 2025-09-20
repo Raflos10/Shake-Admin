@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const row = document.createElement('tr')
                 row.innerHTML = `
                     <td>${venue.id}</td>
-                    <td>${venue.location_name}</td>
+                    <td><a href="/venue.html?id=${venue.id}">${venue.location_name}</a></td>
                     <td>${venue.address_1}${venue.address_2 ? ', ' + venue.address_2 : ''}</td>
                     <td>${venue.city}</td>
                     <td>${venue.country}</td>
