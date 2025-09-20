@@ -25,8 +25,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user = currentSession.user
         userEmailSpan.textContent = user.email
 
+        // Fetch user role
+        let role = 'Normal user'
+        const { data: userRole, error: roleError } = await supabaseClient
+            .from('user_roles')
+            .select('role')
+            .eq('user_id', user.id)
+            .single()
+
+        if (!roleError && userRole) {
+            role = userRole.role
+        }
+
         userDataDiv.innerHTML = `
             <p><strong>User ID:</strong> ${user.id}</p>
+            <p><strong>Role:</strong> ${role}</p>
             <p><strong>Created:</strong> ${new Date(user.created_at).toLocaleString()}</p>
             <p><strong>Last Sign In:</strong> ${new Date(user.last_sign_in_at).toLocaleString()}</p>
         `
