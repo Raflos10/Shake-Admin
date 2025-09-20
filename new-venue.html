@@ -5,49 +5,12 @@ title: New Venue
 
 <h1>New Venue</h1>
 
-<form id="new-venue-form">
-    <div>
-        <label for="country">Country:</label>
-        <input type="text" id="country" name="country" required>
-    </div>
+<div id="search-container">
+    <input type="text" id="search-input" placeholder="Search for a location">
+    <button id="search-btn">Search</button>
+</div>
 
-    <div>
-        <label for="location_name">Location Name:</label>
-        <input type="text" id="location_name" name="location_name" required>
-    </div>
-
-    <div>
-        <label for="address_1">Address 1:</label>
-        <input type="text" id="address_1" name="address_1" required>
-    </div>
-
-    <div>
-        <label for="address_2">Address 2:</label>
-        <input type="text" id="address_2" name="address_2">
-    </div>
-
-    <div>
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city" required>
-    </div>
-
-    <div>
-        <label for="postal_code">Postal Code:</label>
-        <input type="text" id="postal_code" name="postal_code">
-    </div>
-
-    <div>
-        <label for="subdivision">Subdivision:</label>
-        <input type="text" id="subdivision" name="subdivision">
-    </div>
-
-    <div>
-        <label for="coordinates">Coordinates (lat,lng):</label>
-        <input type="text" id="coordinates" name="coordinates" placeholder="e.g., 40.7128,-74.0060">
-    </div>
-
-    <button type="submit">Create Venue</button>
-</form>
+<div id="results"></div>
 
 <div id="message"></div>
 

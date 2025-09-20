@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', async function() {
-    const form = document.getElementById('new-venue-form')
+    const searchInput = document.getElementById('search-input')
+    const searchBtn = document.getElementById('search-btn')
+    const resultsDiv = document.getElementById('results')
     const messageDiv = document.getElementById('message')
 
     function showMessage(text, isError = false) {
@@ -17,37 +19,35 @@ document.addEventListener('DOMContentLoaded', async function() {
         return
     }
 
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault()
-
-        const formData = new FormData(form)
-        const venueData = {
-            country: formData.get('country'),
-            location_name: formData.get('location_name'),
-            address_1: formData.get('address_1'),
-            address_2: formData.get('address_2') || null,
-            city: formData.get('city'),
-            postal_code: formData.get('postal_code') || null,
-            subdivision: formData.get('subdivision') || null,
-            coordinates: formData.get('coordinates') || null
+    searchBtn.addEventListener('click', async function() {
+        const query = searchInput.value.trim()
+        if (!query) {
+            showMessage('Please enter a search query.', true)
+            return
         }
 
         try {
-            const { data, error } = await window.supabaseClient
-                .from('venues')
-                .insert([venueData])
-
-            if (error) {
-                showMessage('Error creating venue: ' + error.message, true)
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`)
+            const results = await response.json()
+            if (results.length > 0) {
+                displayResults(results)
             } else {
-                showMessage('Venue created successfully!')
-                form.reset()
-                setTimeout(() => {
-                    window.location.href = '/dashboard.html'
-                }, 2000)
+                showMessage('No results found.', true)
             }
         } catch (error) {
-            showMessage('Error: ' + error.message, true)
+            showMessage('Error searching: ' + error.message, true)
         }
     })
+
+    function displayResults(places) {
+        resultsDiv.innerHTML = '<h3>Select a location:</h3>'
+        places.forEach(place => {
+            const div = document.createElement('div')
+            const osmId = place.osm_type.charAt(0).toUpperCase() + place.osm_id
+            div.innerHTML = `<p><a href="/new-venue-info.html?place_id=${osmId}"><strong>${place.display_name}</strong></a></p>`
+            resultsDiv.appendChild(div)
+        })
+    }
+
+
 })
