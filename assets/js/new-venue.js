@@ -19,13 +19,25 @@ document.addEventListener('DOMContentLoaded', async function() {
         return
     }
 
-    searchBtn.addEventListener('click', async function() {
+    const urlParams = new URLSearchParams(window.location.search)
+    const initialQuery = urlParams.get('query')
+
+    if (initialQuery) {
+        searchInput.value = initialQuery
+        performSearch(initialQuery)
+    }
+
+    document.getElementById('search-form').addEventListener('submit', function(e) {
+        e.preventDefault()
         const query = searchInput.value.trim()
         if (!query) {
             showMessage('Please enter a search query.', true)
             return
         }
+        window.location.search = '?query=' + encodeURIComponent(query)
+    })
 
+    async function performSearch(query) {
         try {
             const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`)
             const results = await response.json()
@@ -37,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         } catch (error) {
             showMessage('Error searching: ' + error.message, true)
         }
-    })
+    }
 
     function displayResults(places) {
         resultsDiv.innerHTML = '<h3>Select a location:</h3>'
