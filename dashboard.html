@@ -1,26 +1,37 @@
 ---
+layout: default
 title: Dashboard
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title | default: site.title }}</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<body>
-    <main>
-        {{ content }}
-    </main>
+<h1>Dashboard</h1>
 
-    <script>
-        window.SUPABASE_CONFIG = {
-            url: '{{ site.env.SUPABASE_URL | default: "" }}',
-            key: '{{ site.env.SUPABASE_ANON_KEY | default: "" }}'
-        }
-    </script>
-    <script src="{{ '/assets/js/supabase-config.js' | relative_url }}"></script>
-</body>
-</html>
+<section id="user-info">
+    <h2>User Information</h2>
+    <p>Email: <span id="user-email"></span></p>
+    <div id="user-data"></div>
+</section>
+
+        <section id="venues">
+            <h2>Venues</h2>
+            <p>Total Venues: <span id="venues-count"></span></p>
+            <table id="venues-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Location Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody id="venues-tbody">
+            <!-- Venues will be populated here -->
+        </tbody>
+    </table>
+</section>
+
+<button id="logout-btn">Logout</button>
+<div id="message"></div>
+
+<script src="{{ '/assets/js/dashboard.js' | relative_url }}"></script>
