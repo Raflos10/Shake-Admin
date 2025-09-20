@@ -25,3 +25,19 @@ window.checkAuth = async function() {
 
     return session
 }
+
+window.logout = async function() {
+    try {
+        const { error } = await window.supabaseClient.auth.signOut()
+        if (error) {
+            alert('Logout failed: ' + error.message)
+        } else {
+            alert('Logged out successfully!')
+            setTimeout(() => {
+                window.location.href = '/'
+            }, 1000)
+        }
+    } catch (error) {
+        alert('Logout failed: ' + error.message)
+    }
+}

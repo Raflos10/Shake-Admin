@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
     const userEmailSpan = document.getElementById('user-email')
-    const logoutBtn = document.getElementById('logout-btn')
     const userDataDiv = document.getElementById('user-data')
     const messageDiv = document.getElementById('message')
 
@@ -70,21 +69,5 @@ document.addEventListener('DOMContentLoaded', async function() {
     } catch (error) {
         showMessage('Error loading dashboard data: ' + error.message, true)
     }
-
-    logoutBtn.addEventListener('click', async function() {
-        try {
-            const { error } = await window.supabaseClient.auth.signOut()
-
-            if (error) {
-                showMessage('Logout failed: ' + error.message, true)
-            } else {
-                showMessage('Logged out successfully! Redirecting...')
-                setTimeout(() => {
-                    window.location.href = '/'
-                }, 1000)
-            }
-        } catch (error) {
-            showMessage('Logout failed: ' + error.message, true)
-        }
-    })
-})
+}
+)

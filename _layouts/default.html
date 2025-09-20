@@ -8,6 +8,13 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+    <header>
+        <nav>
+            <a href="/dashboard.html">Dashboard</a> |
+            <a href="/new-venue.html">New Venue</a> |
+            <button onclick="window.logout()">Logout</button>
+        </nav>
+    </header>
     <main>
         {{ content }}
     </main>
