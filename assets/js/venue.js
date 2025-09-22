@@ -51,15 +51,15 @@ document.addEventListener('DOMContentLoaded', async function () {
                 <p><strong>Postal Code:</strong> ${venue.postal_code || 'N/A'}</p>
                 <p><strong>Subdivision:</strong> ${venue.subdivision || 'N/A'}</p>
                 <p><strong>Country:</strong> ${venue.country}</p>
-                <p><strong>Coordinates:</strong> ${venue.coordinates ? `${venue.coordinates.lat}, ${venue.coordinates.lng}` : 'N/A'}</p>
+                <p><strong>Coordinates:</strong> ${venue.coordinates ? `${venue.coordinates.coordinates[1]}, ${venue.coordinates.coordinates[0]}` : 'N/A'}</p>
                 <p><strong>Created At:</strong> ${new Date(venue.created_at).toLocaleString()}</p>
                 <p><strong>Updated At:</strong> ${new Date(venue.updated_at).toLocaleString()}</p>
             `
 
             // Set map iframe
             if (venue.coordinates) {
-                const lat = venue.coordinates.lat
-                const lng = venue.coordinates.lng
+                const lat = venue.coordinates.coordinates[1]
+                const lng = venue.coordinates.coordinates[0]
                 const bbox = `${lng - 0.01},${lat - 0.01},${lng + 0.01},${lat + 0.01}`
                 const iframe = document.getElementById('map-iframe')
                 iframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lng}`
