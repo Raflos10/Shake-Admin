@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     async function performSearch(query) {
         try {
-            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`)
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&accept-language=en`)
             const results = await response.json()
             if (results.length > 0) {
                 displayResults(results)

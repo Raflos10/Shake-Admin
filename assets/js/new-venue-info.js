@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     let place
     try {
-        const response = await fetch(`https://nominatim.openstreetmap.org/lookup?format=json&osm_ids=${placeId}`)
+        const response = await fetch(`https://nominatim.openstreetmap.org/lookup?format=json&osm_ids=${placeId}&accept-language=en`)
         const results = await response.json()
         if (results.length === 0) {
             showMessage('Place not found.', true)
