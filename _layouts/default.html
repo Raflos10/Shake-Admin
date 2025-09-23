@@ -4,9 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title | default: site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+    <header>
+        <nav>
+            <a href="/dashboard.html">Dashboard</a> |
+            <a href="/new-venue.html">New Venue</a> |
+            <button onclick="window.logout()">Logout</button>
+        </nav>
+    </header>
     <main>
         {{ content }}
     </main>

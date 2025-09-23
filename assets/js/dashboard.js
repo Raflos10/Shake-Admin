@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
     const userEmailSpan = document.getElementById('user-email')
-    const logoutBtn = document.getElementById('logout-btn')
     const userDataDiv = document.getElementById('user-data')
     const messageDiv = document.getElementById('message')
 
@@ -8,6 +7,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         messageDiv.textContent = text
         messageDiv.style.color = isError ? 'red' : 'green'
     }
+
+    userDataDiv.innerHTML = 'Loading...'
+    document.getElementById('venues-tbody').innerHTML = '<tr><td colspan="6">Loading...</td></tr>'
 
     const session = await window.checkAuth()
 
@@ -25,31 +27,53 @@ document.addEventListener('DOMContentLoaded', async function() {
         const user = currentSession.user
         userEmailSpan.textContent = user.email
 
+        // Fetch user role
+        let role = 'Normal user'
+        const { data: userRole, error: roleError } = await supabaseClient
+            .from('user_roles')
+            .select('role')
+            .eq('user_id', user.id)
+            .single()
+
+        if (!roleError && userRole) {
+            role = userRole.role
+        }
+
         userDataDiv.innerHTML = `
-            <p><strong>Email:</strong> ${user.email}</p>
             <p><strong>User ID:</strong> ${user.id}</p>
+            <p><strong>Role:</strong> ${role}</p>
             <p><strong>Created:</strong> ${new Date(user.created_at).toLocaleString()}</p>
             <p><strong>Last Sign In:</strong> ${new Date(user.last_sign_in_at).toLocaleString()}</p>
         `
 
-    } catch (error) {
-        showMessage('Error loading user data: ' + error.message, true)
-    }
+        // Fetch and display venues
+        const { data: venues, error: venuesError } = await supabaseClient.from('venues').select('*')
 
-    logoutBtn.addEventListener('click', async function() {
-        try {
-            const { error } = await window.supabaseClient.auth.signOut()
-
-            if (error) {
-                showMessage('Logout failed: ' + error.message, true)
-            } else {
-                showMessage('Logged out successfully! Redirecting...')
-                setTimeout(() => {
-                    window.location.href = '/'
-                }, 1000)
-            }
-        } catch (error) {
-            showMessage('Logout failed: ' + error.message, true)
+        if (venuesError) {
+            showMessage('Error loading venues: ' + venuesError.message, true)
+            document.getElementById('venues-tbody').innerHTML = '<tr><td colspan="6">Error loading venues</td></tr>'
+        } else {
+            document.getElementById('venues-count').textContent = venues.length
+            const tbody = document.getElementById('venues-tbody')
+            tbody.innerHTML = '' // Clear any existing rows
+            venues.forEach(venue => {
+                const row = document.createElement('tr')
+                row.innerHTML = `
+                    <td>${venue.id}</td>
+                    <td><a href="/venue.html?id=${venue.id}">${venue.location_name}</a></td>
+                    <td>${venue.address_1}${venue.address_2 ? ', ' + venue.address_2 : ''}</td>
+                    <td>${venue.city}</td>
+                    <td>${venue.country}</td>
+                    <td>${new Date(venue.created_at).toLocaleString()}</td>
+                `
+                tbody.appendChild(row)
+            })
         }
-    })
-})
+
+    } catch (error) {
+        showMessage('Error loading dashboard data: ' + error.message, true)
+        userDataDiv.innerHTML = 'Error loading user data'
+        document.getElementById('venues-tbody').innerHTML = '<tr><td colspan="6">Error loading venues</td></tr>'
+    }
+}
+)

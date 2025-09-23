@@ -1,0 +1,9 @@
+body { background-color: #000; color: #fff; }
+a { color: #0f0; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+.venue-container { display: flex; gap: 20px; }
+.info-section { flex: 1; }
+.map-section { flex: 1; }
+header { background-color: #111; padding: 10px; }
+nav { display: flex; gap: 10px; align-items: center; }
