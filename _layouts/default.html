@@ -10,8 +10,8 @@
 <body>
     <header>
         <nav>
-            <a href="/dashboard.html">Dashboard</a> |
-            <a href="/new-venue.html">New Venue</a> |
+            <a href="{{ '/dashboard.html' | relative_url }}">Dashboard</a> |
+            <a href="{{ '/new-venue.html' | relative_url }}">New Venue</a> |
             <button onclick="window.logout()">Logout</button>
         </nav>
     </header>
@@ -24,6 +24,7 @@
             url: '{{ site.supabase_url }}',
             key: '{{ site.supabase_anon_key }}'
         }
+        window.BASEURL = '{{ site.baseurl }}'
     </script>
     <script src="{{ '/assets/js/supabase-config.js' | relative_url }}"></script>
 </body>

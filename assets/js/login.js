@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 showMessage('Login successful! Redirecting...')
                 setTimeout(() => {
-                    window.location.href = '/dashboard.html'
+                    window.location.href = window.BASEURL + '/dashboard.html'
                 }, 1000)
             }
         } catch (error) {
