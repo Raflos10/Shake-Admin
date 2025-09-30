@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (error || !currentSession) {
             showMessage('Not authenticated. Redirecting to login...', true)
             setTimeout(() => {
-                window.location.href = '/'
+                window.location.href = window.BASEURL || '/'
             }, 2000)
             return
         }
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const row = document.createElement('tr')
                 row.innerHTML = `
                     <td>${venue.id}</td>
-                    <td><a href="/venue.html?id=${venue.id}">${venue.location_name}</a></td>
+                    <td><a href="${window.BASEURL}/venue.html?id=${venue.id}">${venue.location_name}</a></td>
                     <td>${venue.address_1}${venue.address_2 ? ', ' + venue.address_2 : ''}</td>
                     <td>${venue.city}</td>
                     <td>${venue.country}</td>

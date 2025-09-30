@@ -18,9 +18,9 @@ window.checkAuth = async function() {
     const isDashboardPage = currentPath.includes('dashboard')
 
     if (session && isLoginPage) {
-        window.location.href = '/dashboard.html'
+        window.location.href = window.BASEURL + '/dashboard.html'
     } else if (!session && isDashboardPage) {
-        window.location.href = '/'
+        window.location.href = window.BASEURL || '/'
     }
 
     return session
@@ -34,7 +34,7 @@ window.logout = async function() {
         } else {
             alert('Logged out successfully!')
             setTimeout(() => {
-                window.location.href = '/'
+                window.location.href = window.BASEURL || '/'
             }, 1000)
         }
     } catch (error) {

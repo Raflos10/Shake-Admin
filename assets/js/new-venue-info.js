@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (!session) {
         showMessage('Not authenticated. Redirecting to login...', true)
         setTimeout(() => {
-            window.location.href = '/'
+            window.location.href = window.BASEURL || '/'
         }, 2000)
         return
     }
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             } else {
                 showMessage('Venue created successfully!')
                 setTimeout(() => {
-                    window.location.href = '/dashboard.html'
+                    window.location.href = window.BASEURL + '/dashboard.html'
                 }, 2000)
             }
         } catch (error) {

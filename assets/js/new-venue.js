@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (!session) {
         showMessage('Not authenticated. Redirecting to login...', true)
         setTimeout(() => {
-            window.location.href = '/'
+            window.location.href = window.BASEURL || '/'
         }, 2000)
         return
     }
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         places.forEach(place => {
             const div = document.createElement('div')
             const osmId = place.osm_type.charAt(0).toUpperCase() + place.osm_id
-            div.innerHTML = `<p><a href="/new-venue-info.html?place_id=${osmId}"><strong>${place.display_name}</strong></a></p>`
+            div.innerHTML = `<p><a href="${window.BASEURL}/new-venue-info.html?place_id=${osmId}"><strong>${place.display_name}</strong></a></p>`
             resultsDiv.appendChild(div)
         })
     }
